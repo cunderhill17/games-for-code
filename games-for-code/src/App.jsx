@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 
 import Homepage from './Homepage'
+import MemoryGame from './MemoryGame'
 
 function AppLayout() {
 
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
         element: <AppLayout />,
 
         children: [
-            { path: '/',          element: <Homepage /> }
+            { path: '/',          element: <Homepage /> },
+            { path: '/memory',          element: <MemoryGame /> }
         ]
     }
 ])
