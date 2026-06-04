@@ -1,0 +1,66 @@
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+.memoryCard {
+    width: 117px;
+    height: 117px;
+    margin: 2px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.memoryCard.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.card-front img {
+    width: 100%;
+    max-width: 100%;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-back p {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .memoryCard {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .memoryCard {
+        width: 188px;
+        height: 188px;
+    } 
+}
