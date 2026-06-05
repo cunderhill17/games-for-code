@@ -5,13 +5,14 @@ import styles from './styles/components/Cards.module.scss'
 
 
 export default function MemoryGame() {
+    const { width } = useWindowSize();
     const [gameData, setGameData] = useState([]);
     const [rawData, setRawData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
     const [category, setCategory] = useState({category: 0});
-    const { width } = useWindowSize();
-
+    
+    //Retrieves game information from JSON file
     useEffect(() => {
         async function retrieveData() {
             const response = await fetch('https://raw.githubusercontent.com/cunderhill17/json-files/refs/heads/main/quiz-questions/code-quiz-matches.json');
@@ -24,6 +25,7 @@ export default function MemoryGame() {
     }, []);
 
 
+    //Creates categories for select button from raw data (JSON File)
     useEffect(() => {
         if (!rawData.length) return;
 
@@ -41,11 +43,13 @@ export default function MemoryGame() {
 
     }, [rawData])
 
+    //Sets the default category before the player chooses
     useEffect(() => {
         Promise.resolve().then(() => setCategory(allCategories[0]));
     }, [allCategories])
 
 
+    //Determines how many matches will be used based on browser width
     useEffect(() => {
         if (!rawData.length) return;
 
@@ -75,12 +79,16 @@ export default function MemoryGame() {
     }, [width, rawData, category])
 
 
+    //Saves filtered data to game data so cards the player is using won't be changed by resizing the browser
+    //Also sets the game to being in progress
     function startGame() {
         if(filteredData.length !== 0) {
             setGameData(filteredData);
+            setInProgress(true);
         }
     }
     
+    //Updates current category based on user selection event
     function changeCategory(event) {
         setCategory(allCategories[event.target.value]);
     }
@@ -114,6 +122,7 @@ export default function MemoryGame() {
 function GameContainer({gameData, category}) {
     const [cards, setCards] = useState([])
 
+    //Separates the card matches into individual cards and then shuffles them so array order is random
     useEffect(() => {
         if (!gameData.length) return;
 
