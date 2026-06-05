@@ -12,6 +12,7 @@ export default function MemoryGame() {
     const [allCategories, setAllCategories] = useState([]);
     const [category, setCategory] = useState({category: 0});
     const [inProgress, setInProgress] = useState(false);
+    const [matchedPairs, setMatchedPairs] = useState([]);
     
     //Retrieves game information from JSON file
     useEffect(() => {
@@ -77,7 +78,19 @@ export default function MemoryGame() {
 
         return () => clearTimeout(delayDebounceTimer);
 
-    }, [width, rawData, category])
+    }, [width, rawData, category]);
+
+    //Where the win conditions will go
+    useEffect(() => {
+        if(gameData.length === matchedPairs.length && gameData.length !== 0) {
+            const winGameTimeout = setTimeout(() => {
+                console.log("Congrats! You've Won!")
+            }, 2000);
+
+
+            return () => clearTimeout(winGameTimeout);
+        }
+    }, [matchedPairs, gameData]);
 
 
     //Saves filtered data to game data so cards the player is using won't be changed by resizing the browser
@@ -104,14 +117,14 @@ export default function MemoryGame() {
         <main>
             <h1>Code Match</h1>
 
-            <button onClick={startGame}>Start Game</button>
+            <button onClick={startGame} disabled={inProgress}>Start Game</button>
             <select name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
                 {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
             </select>
             <button onClick={resetGame}>Restart Game</button>
 
             <section className="grid-con">
-                <GameContainer gameData={gameData} category={category}/>
+                <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs}/>
             </section>
         </main>
     )
@@ -127,13 +140,15 @@ export default function MemoryGame() {
 
 
 
-function GameContainer({gameData, category}) {
+function GameContainer({gameData, category, setMatchedPairs}) {
     const [cards, setCards] = useState([])
+    const [flippedCards, setFlippedCards] = useState([]);
 
     //Separates the card matches into individual cards and then shuffles them so array order is random
     useEffect(() => {
         if (!gameData.length) {
             Promise.resolve().then(() => setCards([]));
+            Promise.resolve().then(() => setFlippedCards([]));
             return;
         }
 
@@ -143,13 +158,15 @@ function GameContainer({gameData, category}) {
             newCards.push({
                 type: "term",
                 text: item.term,
-                matchId: item.id
+                matchId: item.id,
+                matched: false
             });
 
             newCards.push({
                 type: "definition",
                 text: item.definition,
-                matchId: item.id
+                matchId: item.id,
+                matched: false
             });
         });
 
@@ -167,10 +184,32 @@ function GameContainer({gameData, category}) {
 
         Promise.resolve().then(() => setCards(newCards));
     }, [gameData]);
+
+    useEffect(() => {
+        if(flippedCards.length === 2) {
+            flippedCards[0] === flippedCards[1] ? cardsMatch(flippedCards[0]) : console.log('Cards Do Not Match');
+            Promise.resolve().then(() => setFlippedCards([]));
+        }
+
+        function cardsMatch(cardId) {
+            setCards(prev =>
+                prev.map(card =>
+                    card.matchId === cardId
+                        ? { ...card, matched: true }
+                        : card
+                )
+            );
+            // console.log('Cards Match');
+
+            const newMatchedPair = gameData.findIndex(item => item.id === cardId);
+            setMatchedPairs(prev => [...prev, gameData[newMatchedPair]])
+        }
+
+    }, [flippedCards, gameData, setMatchedPairs])
     
     return (
         <div className={`col-span-full ${styles.cardContainer}`}>
-           {cards.map((item, i) => <Card key={i} item={item} category={category}/>)}
+           {cards.map((item, i) => <Card key={i} item={item} category={category} setFlippedCards={setFlippedCards} flippedCards={flippedCards}/>)}
         </div>
     );
 
@@ -183,21 +222,34 @@ function GameContainer({gameData, category}) {
 
 
 
-function Card({item, category}) {
+function Card({item, category, setFlippedCards, flippedCards}) {
     const [flipped, setFlipped] = useState(false);
+
+    useEffect(() => {
+        if (flippedCards.length === 0) {
+
+            const delayDebounceTimer = setTimeout(() => {                        
+                Promise.resolve().then(() => setFlipped(false));
+            }, 1500);
+
+            return () => clearTimeout(delayDebounceTimer);
+        }
+    }, [flippedCards]);
 
     if (!category || !category.image) return null;
 
-
-    function cardFlipped() {
+    function cardFlipped(event) {
         setFlipped(prev => !prev);
+        const matchId = Number(event.currentTarget.dataset.matchId);
+
+        setFlippedCards(prev => [...prev, matchId]);
     }
 
     return (
-        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={cardFlipped}>
+        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched ? null : cardFlipped} data-match-id={item.matchId}>
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
-                    <img src={category.image} alt={`${category.name} card image`} />
+                    <img src={item.matched ? 'images/matched.jpg' : category.image } alt={`${category.name} card image`} />
                 </div>
                 <div className={styles["card-back"]}>
                     <p>{item.text}</p>
