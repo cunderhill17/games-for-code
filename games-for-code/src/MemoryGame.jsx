@@ -97,6 +97,7 @@ export default function MemoryGame() {
     //Resets the game 
     function resetGame() {
         setInProgress(false);
+        setGameData([]);
     }
 
     return (
@@ -131,7 +132,10 @@ function GameContainer({gameData, category}) {
 
     //Separates the card matches into individual cards and then shuffles them so array order is random
     useEffect(() => {
-        if (!gameData.length) return;
+        if (!gameData.length) {
+            Promise.resolve().then(() => setCards([]));
+            return;
+        }
 
         let newCards = [];
 
