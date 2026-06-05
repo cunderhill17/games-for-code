@@ -11,6 +11,7 @@ export default function MemoryGame() {
     const [filteredData, setFilteredData] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
     const [category, setCategory] = useState({category: 0});
+    const [inProgress, setInProgress] = useState(false);
     
     //Retrieves game information from JSON file
     useEffect(() => {
@@ -93,14 +94,20 @@ export default function MemoryGame() {
         setCategory(allCategories[event.target.value]);
     }
 
+    //Resets the game 
+    function resetGame() {
+        setInProgress(false);
+    }
+
     return (
         <main>
             <h1>Code Match</h1>
 
             <button onClick={startGame}>Start Game</button>
-            <select name="gameCategories" id="gameCategories" onChange={changeCategory}>
+            <select name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
                 {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
             </select>
+            <button onClick={resetGame}>Restart Game</button>
 
             <section className="grid-con">
                 <GameContainer gameData={gameData} category={category}/>
