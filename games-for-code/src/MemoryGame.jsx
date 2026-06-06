@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useWindowSize } from "./util/useWindowResize";
-import styles from './styles/components/Cards.module.scss'
+import styles from './styles/components/Cards.module.scss';
+import btnStyles from './styles/components/Button.module.scss';
+import headingStyles from './styles/components/Headings.module.scss';
 
 
 
@@ -14,6 +16,9 @@ export default function MemoryGame() {
     const [inProgress, setInProgress] = useState(false);
     const [matchedPairs, setMatchedPairs] = useState([]);
     
+    const startTime = useRef(null);
+    const elapsedTime = useRef(null);
+
     //Retrieves game information from JSON file
     useEffect(() => {
         async function retrieveData() {
@@ -67,7 +72,7 @@ export default function MemoryGame() {
                     currentMatches.push(rawData[category.category].matches[i]);
                 }
             } else {
-                for(let i = 0; i < 18; i++) {
+                for(let i = 0; i < 12; i++) {
                     currentMatches.push(rawData[category.category].matches[i]);
                 }
             }
@@ -84,7 +89,9 @@ export default function MemoryGame() {
     useEffect(() => {
         if(gameData.length === matchedPairs.length && gameData.length !== 0) {
             const winGameTimeout = setTimeout(() => {
+                elapsedTime.current = (performance.now() - startTime.current) / 1000
                 console.log("Congrats! You've Won!")
+                console.log(`You took ${elapsedTime.current} seconds`);
             }, 2000);
 
 
@@ -99,6 +106,8 @@ export default function MemoryGame() {
         if(filteredData.length !== 0) {
             setGameData(filteredData);
             setInProgress(true);
+
+            startTime.current = performance.now();
         }
     }
     
@@ -111,21 +120,29 @@ export default function MemoryGame() {
     function resetGame() {
         setInProgress(false);
         setGameData([]);
+        setMatchedPairs([]);
+        startTime.current = null;
+        elapsedTime.current = null;
     }
 
     return (
         <main>
-            <h1>Code Match</h1>
+            <div className="grid-con">
+                <section className="col-span-full center-item">
+                    <h2 className={headingStyles['mainMemHeading']}>Code Match</h2>
+                </section>
 
-            <button onClick={startGame} disabled={inProgress}>Start Game</button>
-            <select name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
-                {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
-            </select>
-            <button onClick={resetGame}>Restart Game</button>
+                <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
+                    <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
+                    <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
+                        {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
+                    </select>
+                    <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
+                    <button className={btnStyles['game-btn']}>Rules</button>
+                </div>
 
-            <section className="grid-con">
                 <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs}/>
-            </section>
+            </div>
         </main>
     )
 }
@@ -246,7 +263,7 @@ function Card({item, category, setFlippedCards, flippedCards}) {
     }
 
     return (
-        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched ? null : cardFlipped} data-match-id={item.matchId}>
+        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched || flipped ? null : cardFlipped} data-match-id={item.matchId}>
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
                     <img src={item.matched ? 'images/matched.jpg' : category.image } alt={`${category.name} card image`} />

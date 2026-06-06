@@ -41,10 +41,14 @@
 .card-front img {
     width: 100%;
     max-width: 100%;
+    border-radius: 10px;
 }
 
 .card-back {
     transform: rotateY(180deg);
+    border: 1px solid rgb(44, 17, 44);
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .card-back p {
