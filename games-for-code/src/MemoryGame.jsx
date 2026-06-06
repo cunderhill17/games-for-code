@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useWindowSize } from "./util/useWindowResize";
-import styles from './styles/components/Cards.module.scss'
+import styles from './styles/components/Cards.module.scss';
+import btnStyles from './styles/components/Button.module.scss';
+import headingStyles from './styles/components/Headings.module.scss';
 
 
 
@@ -115,17 +117,22 @@ export default function MemoryGame() {
 
     return (
         <main>
-            <h1>Code Match</h1>
+            <div className="grid-con">
+                <section className="col-span-full center-item">
+                    <h2 className={headingStyles['mainMemHeading']}>Code Match</h2>
+                </section>
 
-            <button onClick={startGame} disabled={inProgress}>Start Game</button>
-            <select name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
-                {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
-            </select>
-            <button onClick={resetGame}>Restart Game</button>
+                <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
+                    <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
+                    <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
+                        {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
+                    </select>
+                    <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
+                    <button className={btnStyles['game-btn']}>Rules</button>
+                </div>
 
-            <section className="grid-con">
                 <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs}/>
-            </section>
+            </div>
         </main>
     )
 }
