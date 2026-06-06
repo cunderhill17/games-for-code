@@ -67,7 +67,7 @@ export default function MemoryGame() {
                     currentMatches.push(rawData[category.category].matches[i]);
                 }
             } else {
-                for(let i = 0; i < 18; i++) {
+                for(let i = 0; i < 12; i++) {
                     currentMatches.push(rawData[category.category].matches[i]);
                 }
             }
@@ -246,7 +246,7 @@ function Card({item, category, setFlippedCards, flippedCards}) {
     }
 
     return (
-        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched ? null : cardFlipped} data-match-id={item.matchId}>
+        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched || flipped ? null : cardFlipped} data-match-id={item.matchId}>
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
                     <img src={item.matched ? 'images/matched.jpg' : category.image } alt={`${category.name} card image`} />
