@@ -120,6 +120,9 @@ export default function MemoryGame() {
     function resetGame() {
         setInProgress(false);
         setGameData([]);
+        setMatchedPairs([]);
+        startTime.current = null;
+        elapsedTime.current = null;
     }
 
     return (
