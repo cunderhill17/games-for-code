@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useWindowSize } from "./util/useWindowResize";
 import styles from './styles/components/Cards.module.scss';
 import btnStyles from './styles/components/Button.module.scss';
@@ -16,6 +16,9 @@ export default function MemoryGame() {
     const [inProgress, setInProgress] = useState(false);
     const [matchedPairs, setMatchedPairs] = useState([]);
     
+    const startTime = useRef(null);
+    const elapsedTime = useRef(null);
+
     //Retrieves game information from JSON file
     useEffect(() => {
         async function retrieveData() {
@@ -86,7 +89,9 @@ export default function MemoryGame() {
     useEffect(() => {
         if(gameData.length === matchedPairs.length && gameData.length !== 0) {
             const winGameTimeout = setTimeout(() => {
+                elapsedTime.current = (performance.now() - startTime.current) / 1000
                 console.log("Congrats! You've Won!")
+                console.log(`You took ${elapsedTime.current} seconds`);
             }, 2000);
 
 
@@ -101,6 +106,8 @@ export default function MemoryGame() {
         if(filteredData.length !== 0) {
             setGameData(filteredData);
             setInProgress(true);
+
+            startTime.current = performance.now();
         }
     }
     
