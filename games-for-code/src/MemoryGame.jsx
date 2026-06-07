@@ -160,6 +160,7 @@ export default function MemoryGame() {
 function GameContainer({gameData, category, setMatchedPairs}) {
     const [cards, setCards] = useState([])
     const [flippedCards, setFlippedCards] = useState([]);
+    const [lockBoard, setLockBoard] = useState(false);
 
     //Separates the card matches into individual cards and then shuffles them so array order is random
     useEffect(() => {
@@ -205,6 +206,7 @@ function GameContainer({gameData, category, setMatchedPairs}) {
     useEffect(() => {
         if(flippedCards.length === 2) {
             flippedCards[0] === flippedCards[1] ? cardsMatch(flippedCards[0]) : console.log('Cards Do Not Match');
+            Promise.resolve().then(() => setLockBoard(true));
             Promise.resolve().then(() => setFlippedCards([]));
         }
 
@@ -226,7 +228,13 @@ function GameContainer({gameData, category, setMatchedPairs}) {
     
     return (
         <div className={`col-span-full ${styles.cardContainer}`}>
-           {cards.map((item, i) => <Card key={i} item={item} category={category} setFlippedCards={setFlippedCards} flippedCards={flippedCards}/>)}
+           {cards.map((item, i) => <Card key={i} 
+                item={item} category={category} 
+                setFlippedCards={setFlippedCards} 
+                flippedCards={flippedCards}
+                lockBoard={lockBoard}
+                setLockBoard={setLockBoard}
+            />)}
         </div>
     );
 
@@ -239,7 +247,7 @@ function GameContainer({gameData, category, setMatchedPairs}) {
 
 
 
-function Card({item, category, setFlippedCards, flippedCards}) {
+function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLockBoard}) {
     const [flipped, setFlipped] = useState(false);
 
     useEffect(() => {
@@ -247,23 +255,31 @@ function Card({item, category, setFlippedCards, flippedCards}) {
 
             const delayDebounceTimer = setTimeout(() => {                        
                 Promise.resolve().then(() => setFlipped(false));
+                Promise.resolve().then(() => setLockBoard(false))
             }, 1500);
 
             return () => clearTimeout(delayDebounceTimer);
         }
-    }, [flippedCards]);
+    }, [flippedCards, setLockBoard]);
 
     if (!category || !category.image) return null;
 
     function cardFlipped(event) {
+        if (item.matched) return;
+        if (flipped) return;
+        if (lockBoard) return;
+
+
         setFlipped(prev => !prev);
         const matchId = Number(event.currentTarget.dataset.matchId);
 
         setFlippedCards(prev => [...prev, matchId]);
+
+        console.log(`You've flipped ${flippedCards.length} card(s)`);
     }
 
     return (
-        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={item.matched || flipped ? null : cardFlipped} data-match-id={item.matchId}>
+        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={cardFlipped} data-match-id={item.matchId}>
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
                     <img src={item.matched ? 'images/matched.jpg' : category.image } alt={`${category.name} card image`} />
