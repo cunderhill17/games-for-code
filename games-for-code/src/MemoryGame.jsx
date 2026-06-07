@@ -15,6 +15,8 @@ export default function MemoryGame() {
     const [category, setCategory] = useState({category: 0});
     const [inProgress, setInProgress] = useState(false);
     const [matchedPairs, setMatchedPairs] = useState([]);
+    const [wrongGuesses, setWrongGuesses] = useState(0);
+    const [playerScore, setPlayerScore] = useState(0);
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
@@ -90,14 +92,94 @@ export default function MemoryGame() {
         if(gameData.length === matchedPairs.length && gameData.length !== 0) {
             const winGameTimeout = setTimeout(() => {
                 elapsedTime.current = (performance.now() - startTime.current) / 1000
-                console.log("Congrats! You've Won!")
-                console.log(`You took ${elapsedTime.current} seconds`);
+
+                let scoreToAdd = calculatePlayerScore();
+                setPlayerScore(prev => prev + scoreToAdd);
+
             }, 2000);
 
+            //Calculate Player Score
+            function calculatePlayerScore() {
+                let addToPlayerScore = 100;
+
+                switch (gameData.length) {
+                    case 6:
+                        if (wrongGuesses < 7) {
+                            addToPlayerScore += 100
+                        } else if (wrongGuesses < 16) {
+                            addToPlayerScore += 50
+                        } else if (wrongGuesses < 24) {
+                            addToPlayerScore += 25
+                        }
+
+                        if (elapsedTime.current < 36) {
+                            addToPlayerScore += 150
+                        } else if (elapsedTime.current < 72) {
+                            addToPlayerScore += 100
+                        } else if (elapsedTime.current < 108) {
+                            addToPlayerScore += 50
+                        }
+
+                        return addToPlayerScore;
+
+                    case 10:
+                        if (wrongGuesses < 15) {
+                            addToPlayerScore += 100
+                        } else if (wrongGuesses < 31) {
+                            addToPlayerScore += 50
+                        } else if (wrongGuesses < 41) {
+                            addToPlayerScore += 25
+                        }
+
+                        if (elapsedTime.current < 80) {
+                            addToPlayerScore += 150
+                        } else if (elapsedTime.current < 160) {
+                            addToPlayerScore += 100
+                        } else if (elapsedTime.current < 240) {
+                            addToPlayerScore += 50
+                        }
+
+                        return addToPlayerScore;
+                    
+                    case 12:
+                        if (wrongGuesses < 16) {
+                            addToPlayerScore += 100
+                        } else if (wrongGuesses < 33) {
+                            addToPlayerScore += 50
+                        } else if (wrongGuesses < 45) {
+                            addToPlayerScore += 25
+                        }
+
+                        if (elapsedTime.current < 100) {
+                            addToPlayerScore += 150
+                        } else if (elapsedTime.current < 175) {
+                            addToPlayerScore += 100
+                        } else if (elapsedTime.current < 250) {
+                            addToPlayerScore += 50
+                        }
+
+                        return addToPlayerScore
+
+                    default:
+                        break;
+                }
+
+            }
 
             return () => clearTimeout(winGameTimeout);
         }
-    }, [matchedPairs, gameData]);
+    }, [matchedPairs, gameData, wrongGuesses]);
+
+
+    useEffect(() => {
+        if(gameData.length === matchedPairs.length && gameData.length !== 0) { 
+            console.log("Congrats! You've Won!")
+            console.log(`You took ${elapsedTime.current} seconds`);
+            console.log(`You made ${wrongGuesses} wrong guesses.`);
+            console.log(`Your score is: ${playerScore}`);
+        }
+    }, [playerScore])
+
 
 
     //Saves filtered data to game data so cards the player is using won't be changed by resizing the browser
@@ -123,6 +205,7 @@ export default function MemoryGame() {
         setMatchedPairs([]);
         startTime.current = null;
         elapsedTime.current = null;
+        setPlayerScore(0);
     }
 
     return (
@@ -141,7 +224,7 @@ export default function MemoryGame() {
                     <button className={btnStyles['game-btn']}>Rules</button>
                 </div>
 
-                <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs}/>
+                <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs} setWrongGuesses={setWrongGuesses}/>
             </div>
         </main>
     )
@@ -157,7 +240,7 @@ export default function MemoryGame() {
 
 
 
-function GameContainer({gameData, category, setMatchedPairs}) {
+function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
     const [cards, setCards] = useState([])
     const [flippedCards, setFlippedCards] = useState([]);
     const [lockBoard, setLockBoard] = useState(false);
@@ -205,7 +288,7 @@ function GameContainer({gameData, category, setMatchedPairs}) {
 
     useEffect(() => {
         if(flippedCards.length === 2) {
-            flippedCards[0] === flippedCards[1] ? cardsMatch(flippedCards[0]) : console.log('Cards Do Not Match');
+            flippedCards[0] === flippedCards[1] ? cardsMatch(flippedCards[0]) : setWrongGuesses(prev => prev + 1);
             Promise.resolve().then(() => setLockBoard(true));
             Promise.resolve().then(() => setFlippedCards([]));
         }
@@ -224,7 +307,7 @@ function GameContainer({gameData, category, setMatchedPairs}) {
             setMatchedPairs(prev => [...prev, gameData[newMatchedPair]])
         }
 
-    }, [flippedCards, gameData, setMatchedPairs])
+    }, [flippedCards, gameData, setMatchedPairs, setWrongGuesses])
     
     return (
         <div className={`col-span-full ${styles.cardContainer}`}>
@@ -269,13 +352,9 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
         if (flipped) return;
         if (lockBoard) return;
 
-
         setFlipped(prev => !prev);
         const matchId = Number(event.currentTarget.dataset.matchId);
-
         setFlippedCards(prev => [...prev, matchId]);
-
-        console.log(`You've flipped ${flippedCards.length} card(s)`);
     }
 
     return (
