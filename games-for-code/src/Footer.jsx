@@ -2,8 +2,12 @@ import footerStyles from './styles/components/Footer.module.scss';
 
 export default function Footer() {
     return (
-        <footer>
-            <h2>This is the footer</h2>
+        <footer id={footerStyles['footer']}>
+            <section className='grid-con'>
+                <p className='col-span-full'>
+                    &copy; 2026 Games for Code. Designed and developed by Paper Lantern Studio. All rights reserved.
+                </p>
+            </section>
         </footer>
     )
 }
