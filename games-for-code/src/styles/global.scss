@@ -57,7 +57,7 @@ body {
     column-gap: 10px;
     row-gap: 5px;
     width: 412px;
-    margin: 0px auto;
+    margin: 25px auto;
 
     @media (min-width: 768px) {
         grid-template-columns: repeat(8, 1fr);
