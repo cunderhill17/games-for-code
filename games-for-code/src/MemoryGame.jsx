@@ -17,6 +17,7 @@ export default function MemoryGame() {
     const [matchedPairs, setMatchedPairs] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState(0);
     const [playerScore, setPlayerScore] = useState(0);
+    const [openModal, setOpenModal] = useState(false);
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
@@ -208,6 +209,14 @@ export default function MemoryGame() {
         setPlayerScore(0);
     }
 
+    function openRulesPopup() {
+        setOpenModal(true);
+    }
+
+    function closeRulesPopup() {
+        setOpenModal(false);
+    }
+
     return (
         <main>
             <div className="grid-con">
@@ -221,16 +230,16 @@ export default function MemoryGame() {
                         {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
                     </select>
                     <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
-                    <button className={btnStyles['game-btn']}>Rules</button>
+                    <button className={btnStyles['game-btn']} onClick={openRulesPopup}>Rules</button>
                 </div>
 
                 <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs} setWrongGuesses={setWrongGuesses}/>
             </div>
 
-            <section className={styles['rules-popup']}>
+            <section className={`${styles['rules-popup']} ${styles[openModal ? 'open' : '']}`}>
                 <h2>Code Match Rules</h2>
                 <p>This is where the rules will go.</p>
-                <button className={btnStyles['close-popup']}>Close Popup</button>
+                <button className={btnStyles['close-popup']} onClick={closeRulesPopup}>Close Popup</button>
             </section>
         </main>
     )

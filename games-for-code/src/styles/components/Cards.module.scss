@@ -76,7 +76,7 @@
     box-shadow: 3px 3px 3px rgba($color: rgb(37, 21, 37), $alpha: 0.5);
     color: white;
     border-radius: 15px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -89,4 +89,8 @@
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.rules-popup.open {
+    display: flex;
 }
