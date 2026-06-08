@@ -1,0 +1,108 @@
+//Styling for the hero section
+#hero-con {
+    background-color: rgb(44, 17, 44);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+
+    p {
+        color: white;
+    }
+}
+
+//Styling for the informational cards
+#card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.card {
+    width: 117px;
+    height: 117px;
+    margin: 2px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.card-front {
+    border: 1px solid rgb(44, 17, 44);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    border: 1px solid rgb(44, 17, 44);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.card-back p {
+    text-align: center;
+}
+
+//styling for the 'coming-soon' section
+#coming-soon {
+    background-color: rgb(44, 17, 44);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+
+    p {
+        color: white;
+    }
+}
+
+
+//Media Queries
+
+@media screen and (min-width: 768px) {
+    #card-container {
+        gap: 25px;
+    }
+
+    .card {
+        width: 175px;
+        height: 175px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #card-container {
+        gap: 35px;
+    }
+
+    .card {
+        width: 225px;
+        height: 225px;
+    }
+}
