@@ -20,6 +20,11 @@ a {
     text-decoration: none;
 }
 
+//to account for fixed footer
+body {
+    padding-bottom: 115px;
+}
+
 /* ---3. UTILITIES--- */
 
 .hidden {
