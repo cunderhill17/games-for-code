@@ -84,6 +84,7 @@
     padding: 15px;
     width: 350px;
     text-align: center;
+    z-index: 1000;
 
     position: fixed;
     top: 35%;
@@ -92,5 +93,30 @@
 }
 
 .rules-popup.open {
+    display: flex;
+}
+
+//Player Win Popup 
+.win-popup {
+    background-color: rgb(88, 62, 88);
+    box-shadow: 3px 3px 3px rgba($color: rgb(37, 21, 37), $alpha: 0.5);
+    color: white;
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 15px;
+    width: 350px;
+    text-align: center;
+
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.win-popup.open {
     display: flex;
 }
