@@ -1,0 +1,22 @@
+#page-header {
+    padding: 15px;
+    border-bottom: 1px solid rgb(136, 47, 136);
+    margin-bottom: 30px;
+
+    #main-nav {
+        ul {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 25px;
+            list-style-type: none;
+            padding: 0px;
+
+            li {
+                a {
+                    color: rgb(44, 17, 44);
+                }
+            }
+        }
+    }
+}

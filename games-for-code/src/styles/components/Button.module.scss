@@ -1,3 +1,4 @@
+//Styling for game: Code Match
 .memoryBtnCon {
     display: flex;
     justify-content: center;
@@ -25,4 +26,19 @@
   cursor: not-allowed;
   border-color: #e0e0e0;
   box-shadow: none;
+}
+
+
+//Styling for Popup Button
+.close-popup {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(44, 17, 44);
+    color: rgb(255, 229, 229);
+    font-size: 16px;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
