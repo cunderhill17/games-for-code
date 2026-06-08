@@ -17,7 +17,8 @@ export default function MemoryGame() {
     const [matchedPairs, setMatchedPairs] = useState([]);
     const [wrongGuesses, setWrongGuesses] = useState(0);
     const [playerScore, setPlayerScore] = useState(0);
-    const [openModal, setOpenModal] = useState(false);
+    const [openRulesModal, setOpenRulesModal] = useState(false);
+    const [openWinModal, setOpenWinModal] = useState(false);
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
@@ -96,6 +97,7 @@ export default function MemoryGame() {
 
                 let scoreToAdd = calculatePlayerScore();
                 setPlayerScore(prev => prev + scoreToAdd);
+                setOpenWinModal(true);
 
             }, 2000);
 
@@ -170,18 +172,7 @@ export default function MemoryGame() {
             return () => clearTimeout(winGameTimeout);
         }
     }, [matchedPairs, gameData, wrongGuesses]);
-
-
-    useEffect(() => {
-        if(gameData.length === matchedPairs.length && gameData.length !== 0) { 
-            console.log("Congrats! You've Won!")
-            console.log(`You took ${elapsedTime.current} seconds`);
-            console.log(`You made ${wrongGuesses} wrong guesses.`);
-            console.log(`Your score is: ${playerScore}`);
-        }
-    }, [playerScore])
-
-
+    
 
     //Saves filtered data to game data so cards the player is using won't be changed by resizing the browser
     //Also sets the game to being in progress
@@ -207,14 +198,19 @@ export default function MemoryGame() {
         startTime.current = null;
         elapsedTime.current = null;
         setPlayerScore(0);
+        setOpenWinModal(false);
     }
 
     function openRulesPopup() {
-        setOpenModal(true);
+        setOpenRulesModal(true);
     }
 
     function closeRulesPopup() {
-        setOpenModal(false);
+        setOpenRulesModal(false);
+    }
+
+    function closeWinModal() {
+        setOpenWinModal(false);
     }
 
     return (
@@ -236,11 +232,18 @@ export default function MemoryGame() {
                 <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs} setWrongGuesses={setWrongGuesses}/>
             </div>
 
-            <section className={`${styles['rules-popup']} ${styles[openModal ? 'open' : '']}`}>
+            <section className={`${styles['rules-popup']} ${styles[openRulesModal ? 'open' : '']}`}>
                 <h2>Code Match Rules</h2>
                 <p>This is where the rules will go.</p>
                 <button className={btnStyles['close-popup']} onClick={closeRulesPopup}>Close Popup</button>
             </section>
+
+            <section className={`${styles['win-popup']} ${styles[openWinModal ? 'open' : '']}`}>
+                <h2>You've Won! Congrats!</h2>
+                <p>Player Score: {playerScore}</p>
+                <button className={btnStyles['close-popup']} onClick={closeWinModal}>Close</button>
+            </section>
+
         </main>
     )
 }
