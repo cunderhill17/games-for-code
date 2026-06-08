@@ -230,7 +230,7 @@ export default function MemoryGame() {
             <section className={styles['rules-popup']}>
                 <h2>Code Match Rules</h2>
                 <p>This is where the rules will go.</p>
-                <button>Close Popup</button>
+                <button className={btnStyles['close-popup']}>Close Popup</button>
             </section>
         </main>
     )
