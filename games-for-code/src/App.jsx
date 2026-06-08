@@ -1,12 +1,14 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 
 import Homepage from './Homepage'
+import Header from './Header'
 import MemoryGame from './MemoryGame'
 
 function AppLayout() {
 
     return (
-        <>      
+        <>  
+            <Header />    
             <Outlet/>       
         </>
     )
