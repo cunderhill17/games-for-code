@@ -226,6 +226,12 @@ export default function MemoryGame() {
 
                 <GameContainer gameData={gameData} category={category} setMatchedPairs={setMatchedPairs} setWrongGuesses={setWrongGuesses}/>
             </div>
+
+            <section className={styles['rules-popup']}>
+                <h2>Code Match Rules</h2>
+                <p>This is where the rules will go.</p>
+                <button>Close Popup</button>
+            </section>
         </main>
     )
 }
