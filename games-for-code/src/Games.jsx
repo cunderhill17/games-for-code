@@ -2,14 +2,26 @@ import { NavLink } from "react-router-dom"
 import cardStyles from './styles/components/Cards.module.scss';
 
 export default function Games() {
-    // const gameInfo = [
-    //     {
-    //         name: "Code Match",
-    //         available: true,
-    //         image: 'images/code-match.jpg',
-    //         link: '/memory'
-    //     }
-    // ]
+    const gameInfo = [
+        {
+            name: "Code Match",
+            available: true,
+            image: 'images/code-match.jpg',
+            link: '/memory'
+        },
+        {
+            name: "Logic Lines",
+            available: false,
+            image: 'images/code-match.jpg',
+            link: '#' 
+        },
+        {
+            name: "Syntax Saver",
+            available: false,
+            image: 'images/code-match.jpg',
+            link: '#' 
+        }
+    ]
 
 
     return (
@@ -20,8 +32,8 @@ export default function Games() {
             </section>
 
             <section className="grid-con">
-                <div className={cardStyles['card-container']}>
-                    <GameCard />
+                <div className={`col-span-full ${cardStyles['cardContainer']}`}>
+                    {gameInfo.map((item, i) => <GameCard key={i} item={item} />)}
                 </div>
             </section>
 
@@ -30,24 +42,20 @@ export default function Games() {
 }
 
 
-function GameCard() {
+function GameCard({item}) {
     return (
-        <>
-        
-            <NavLink to="/memory">
-                <section className={`pos-relative ${cardStyles['game-card']}`}>
-                    <div className={cardStyles['game-top']}>
-                        <h2>Code Match</h2>
-                        <img src="images/code-match.jpg" alt="Code Match Game Image" />
-                    </div>
-                    <div className={cardStyles['game-hover']}>
-                        <img src="images/play-button.svg" alt="Play Button Icon" />
-                    </div>
-                </section>
-            </NavLink>
 
-        </>
-
+        <section className={`pos-relative ${cardStyles['game-card']}`}>
+            <NavLink to={item.link}>
+                <div className={cardStyles['game-top']}>
+                    <h2>{item.name}</h2>
+                    <img src={item.image} alt={`${item.name} Game Image`} />
+                </div>
+                <div className={cardStyles['game-hover']}>
+                    <img src="images/play-button.svg" alt="Play Button Icon" />
+                </div>
+            </NavLink> 
+        </section>    
 
     )
 }
