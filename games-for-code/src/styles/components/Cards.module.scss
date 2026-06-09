@@ -120,3 +120,60 @@
 .win-popup.open {
     display: flex;
 }
+
+
+//Styling for Games Page Card Modal
+.game-card {
+    width: 175px;
+    height: 175px;
+    margin: 2px;
+    background-color: rgb(226, 217, 226);
+    border-radius: 10px;
+    padding: 15px;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+
+        .game-hover {
+            display: flex;
+        }
+    }
+
+    .game-top {
+        display: flex;
+    }
+
+    .game-hover {
+        display: none;
+    }
+
+    .game-top, .game-hover {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        img {
+            width: 60%;
+        }
+    }
+
+    .game-hover {
+        width: 175px;
+        height: 175px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+}

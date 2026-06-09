@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import cardStyles from './styles/components/Cards.module.scss';
 
 export default function Games() {
     // const gameInfo = [
@@ -19,7 +20,7 @@ export default function Games() {
             </section>
 
             <section className="grid-con">
-                <div className="games-con">
+                <div className={cardStyles['card-container']}>
                     <GameCard />
                 </div>
             </section>
@@ -31,16 +32,22 @@ export default function Games() {
 
 function GameCard() {
     return (
-        <NavLink to="/memory">
-            <section className="pos-relative">
-                <div>
-                    <h2>Code Match</h2>
-                    <img src="images/code-match.jpg" alt="Code Match Game Image" />
-                </div>
-                <div>
-                    <img src="images/play-button.svg" alt="Play Button Icon" />
-                </div>
-            </section>
-        </NavLink>
+        <>
+        
+            <NavLink to="/memory">
+                <section className={`pos-relative ${cardStyles['game-card']}`}>
+                    <div className={cardStyles['game-top']}>
+                        <h2>Code Match</h2>
+                        <img src="images/code-match.jpg" alt="Code Match Game Image" />
+                    </div>
+                    <div className={cardStyles['game-hover']}>
+                        <img src="images/play-button.svg" alt="Play Button Icon" />
+                    </div>
+                </section>
+            </NavLink>
+
+        </>
+
+
     )
 }
