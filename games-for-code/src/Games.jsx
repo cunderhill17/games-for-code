@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
 import cardStyles from './styles/components/Cards.module.scss';
+import headingStyles from './styles/components/Headings.module.scss';
 
 export default function Games() {
     const gameInfo = [
@@ -27,8 +28,8 @@ export default function Games() {
     return (
         <main>
             <section className="grid-con">
-                <h2 className="col-span-full center-item">Games</h2>
-                <h3 className="col-span-full center-item">Browse and Level Up Your Skills!</h3>
+                <h2 className={`col-span-full center-item ${headingStyles['gamesHeading']}`}>Games</h2>
+                <h3 className={`col-span-full center-item ${headingStyles['gamesSubHeading']}`}>Browse and Level Up Your Skills!</h3>
             </section>
 
             <section className="grid-con">
