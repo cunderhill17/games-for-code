@@ -1,4 +1,14 @@
 .mainMemHeading {
     font-size: 36px;
-    color: rgb(44, 17, 44);
+    color: var(--clr-text);
+}
+
+.gamesHeading {
+    font-size: 36px;
+    color: var(--clr-text);
+}
+
+.gamesSubHeading {
+    font-size: 24px;
+    color: var(--clr-text);
 }

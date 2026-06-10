@@ -1,13 +1,13 @@
 //Styling for the hero section
 #hero-con {
-    background-color: rgb(44, 17, 44);
+    background-color: var(--clr-surface);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 15px;
 
     p {
-        color: white;
+        color: var(--clr-text);
     }
 }
 
@@ -53,32 +53,38 @@
 }
 
 .card-front {
-    border: 1px solid rgb(44, 17, 44);
+    border: 1px solid var(--clr-accent);
     border-radius: 10px;
     padding: 5px;
 }
 
 .card-back {
     transform: rotateY(180deg);
-    border: 1px solid rgb(44, 17, 44);
+    border: 1px solid var(--clr-accent);
     border-radius: 10px;
     padding: 5px;
 }
 
+.card-front p {
+    text-align: center;
+    color: var(--clr-text);
+}
+
 .card-back p {
     text-align: center;
+    color: var(--clr-text);
 }
 
 //styling for the 'coming-soon' section
 #coming-soon {
-    background-color: rgb(44, 17, 44);
+    background-color: var(--clr-surface);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 15px;
 
     p {
-        color: white;
+        color: var(--clr-text);
     }
 }
 

@@ -3,8 +3,9 @@
 
     1. Imports
     2. Resets
-    3. Utilities
-    4. Grid System
+    3. Variables
+    4. Utilities
+    5. Grid System
 */
 
 
@@ -20,12 +21,19 @@ a {
     text-decoration: none;
 }
 
-//to account for fixed footer
-body {
-    padding-bottom: 115px;
+/* ---3. VARIABLES--- */
+
+
+:root {
+  --clr-bg: #000901;
+  --clr-surface: #001702;
+  --clr-accent: #FFCE1B;
+  --clr-text: #ffffff;
+  --clr-muted: #999999;
 }
 
-/* ---3. UTILITIES--- */
+
+/* ---4. UTILITIES--- */
 
 .hidden {
     display: none;
@@ -46,10 +54,14 @@ body {
     font-weight: 100;
 }
 
+//to account for fixed footer
+body {
+    padding-bottom: 115px;
+    background-color: var(--clr-bg);
+}
 
 
-
-/* ---4. GRID SYSTEM--- */
+/* ---5. GRID SYSTEM--- */
 
 .grid-con {
     display: grid;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="play-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 316.76 400.74">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M.5,26.25v348.24c0,20.47,22.76,32.73,39.85,21.47l264.34-174.12c15.42-10.16,15.42-32.78,0-42.94L40.35,4.78C23.26-6.48.5,5.78.5,26.25Z"/>
+</svg>

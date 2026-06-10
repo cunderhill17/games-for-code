@@ -1,7 +1,11 @@
 #page-header {
     padding: 15px;
-    border-bottom: 1px solid rgb(136, 47, 136);
+    border-bottom: 1px solid var(--clr-accent);
     margin-bottom: 30px;
+
+    p {
+        color: var(--clr-text);
+    }
 
     #main-nav {
         ul {
@@ -14,7 +18,7 @@
 
             li {
                 a {
-                    color: rgb(44, 17, 44);
+                    color: var(--clr-text);
                 }
             }
         }
