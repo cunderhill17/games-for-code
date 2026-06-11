@@ -12,7 +12,7 @@ export default function Header() {
             <nav id={headerStyles['main-nav']} className="col-span-3 md:col-start-6 md:col-end-9 lg:col-start-10 lg:col-end-13">
                 <ul>
                     <li><NavLink to="/games">Games</NavLink></li>
-                    <li><NavLink to="/">About</NavLink></li>
+                    <li><NavLink to="/about">About</NavLink></li>
                 </ul>
             </nav>
         </header>

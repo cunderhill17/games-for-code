@@ -5,6 +5,7 @@ import Header from './Header'
 import Footer from './Footer'
 import MemoryGame from './MemoryGame'
 import Games from './Games'
+import About from './About'
 
 function AppLayout() {
 
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
         children: [
             { path: '/',          element: <Homepage /> },
             { path: '/memory',    element: <MemoryGame /> },
-            { path: '/games',     element: <Games />}
+            { path: '/games',     element: <Games />},
+            { path: '/about',     element: <About />}
         ]
     }
 ])
