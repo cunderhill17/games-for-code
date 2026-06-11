@@ -76,25 +76,37 @@
     background-color: var(--clr-surface);
     box-shadow: 3px 3px 3px rgba($color: var(--clr-surface), $alpha: 0.5);
     color: var(--clr-text);
+    border: 1px solid var(--clr-accent);
     border-radius: 15px;
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 25px;
     padding: 15px;
     width: 350px;
-    text-align: center;
     z-index: 1000;
-
     position: fixed;
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+        margin: 10px 0px;
+        text-align: center;
+    }
+
+    ol {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        margin: 0px auto;
+    }
 }
 
 .rules-popup.open {
-    display: flex;
+    display: block;
 }
 
 //Player Win Popup 
