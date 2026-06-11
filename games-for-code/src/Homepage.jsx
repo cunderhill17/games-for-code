@@ -23,8 +23,9 @@ export default function Homepage() {
         <main>
 
             <section className="grid-con">
-                <div id={styles['hero-con']} className="col-span-full">
+                <div className={`col-span-full pos-relative ${styles['hero-con']}`}>
                     <img src={banner} alt="Game Symbols and Icons"/>
+                    <h2>Play Games. <br/> Learn Code.</h2>
                 </div>
             </section>
 

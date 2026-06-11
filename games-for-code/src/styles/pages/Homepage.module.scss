@@ -1,12 +1,16 @@
 //Styling for the hero section
-#hero-con {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
+.hero-con {
+    img {
+        width: 100%;
+        max-width: 100%;
+    }
 
-    p {
+    h2 {
         color: var(--clr-text);
+        position: absolute;
+        left: 42%;
+        top: 32%;
+        font-size: 16px;
     }
 }
 
@@ -91,6 +95,12 @@
 //Media Queries
 
 @media screen and (min-width: 768px) {
+    .hero-con {
+        h2 {
+            font-size: 30px;
+        }
+    }
+
     #card-container {
         gap: 25px;
     }
@@ -102,6 +112,12 @@
 }
 
 @media screen and (min-width: 1200px) {
+    .hero-con {
+        h2 {
+            font-size: 45px;
+        }
+    }
+
     #card-container {
         gap: 35px;
     }
