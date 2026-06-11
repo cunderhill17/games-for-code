@@ -1,5 +1,5 @@
 import styles from './styles/pages/Homepage.module.scss';
-
+import banner from './assets/banner.svg'
 
 export default function Homepage() {
 
@@ -24,7 +24,7 @@ export default function Homepage() {
 
             <section className="grid-con">
                 <div id={styles['hero-con']} className="col-span-full">
-                    <p>Hero Section</p>
+                    <img src={banner} alt="Game Symbols and Icons"/>
                 </div>
             </section>
 
