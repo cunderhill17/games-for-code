@@ -1,0 +1,33 @@
+.about-text-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 80%;
+    min-height: 600px;
+    padding: 15px;
+    background-color: color-mix(in srgb, var(--clr-accent) 50%, transparent);
+    border-radius: 10px;
+
+
+    p {
+        color: var(--clr-text);
+        line-height: 24px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .about-text-box {
+        width: 60%;
+
+        p {
+            font-size: 16px;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .about-text-box {
+        width: 40%;
+    }
+}

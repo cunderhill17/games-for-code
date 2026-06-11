@@ -234,7 +234,14 @@ export default function MemoryGame() {
 
             <section className={`${styles['rules-popup']} ${styles[openRulesModal ? 'open' : '']}`}>
                 <h2>Code Match Rules</h2>
-                <p>This is where the rules will go.</p>
+                <ol>
+                    <li>Flip the cards to reveal their contents</li>
+                    <li>Find pairs that match each other</li>
+                    <li>The game is won once all pairs have been matched</li>
+                    <li>Bonus points are awarded for faster completion times and fewer wrong guesses</li>
+                    <li>Use the category dropdown to switch topics</li>
+                    <li>The number of starting cards adjusts based on your browser width to ensure accessibility across all devices</li>
+                </ol>
                 <button className={btnStyles['close-popup']} onClick={closeRulesPopup}>Close Popup</button>
             </section>
 

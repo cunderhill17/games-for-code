@@ -50,7 +50,7 @@ function GameCard({item}) {
             <NavLink to={item.link}>
                 <div className={cardStyles['game-top']}>
                     <h2>{item.name}</h2>
-                    <img src={item.image} alt={`${item.name} Game Image`} />
+                    {/* <img src={item.image} alt={`${item.name} Game Image`} /> */}
                 </div>
                 <div className={cardStyles['game-hover']}>
                     <img src="images/play-button.svg" alt="Play Button Icon" />

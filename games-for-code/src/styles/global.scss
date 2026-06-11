@@ -32,6 +32,11 @@ a {
   --clr-muted: #999999;
 }
 
+:root {
+    --font-heading: "Orbitron", sans-serif;
+    --font-body: "Inter", sans-serif;
+}
+
 
 /* ---4. UTILITIES--- */
 
@@ -58,6 +63,7 @@ a {
 body {
     padding-bottom: 115px;
     background-color: var(--clr-bg);
+    font-family: var(--font-body);
 }
 
 

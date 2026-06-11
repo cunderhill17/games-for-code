@@ -76,25 +76,38 @@
     background-color: var(--clr-surface);
     box-shadow: 3px 3px 3px rgba($color: var(--clr-surface), $alpha: 0.5);
     color: var(--clr-text);
+    border: 1px solid var(--clr-accent);
     border-radius: 15px;
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 25px;
     padding: 15px;
     width: 350px;
-    text-align: center;
     z-index: 1000;
-
     position: fixed;
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+        margin: 10px 0px;
+        text-align: center;
+        font-family: var(--font-heading);
+    }
+
+    ol {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        margin: 0px auto;
+    }
 }
 
 .rules-popup.open {
-    display: flex;
+    display: block;
 }
 
 //Player Win Popup 
@@ -116,6 +129,10 @@
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+        font-family: var(--font-heading);
+    }
 }
 
 .win-popup.open {
@@ -129,6 +146,7 @@
     height: 175px;
     margin: 2px;
     background-color: var(--clr-surface);
+    border: 2px solid var(--clr-accent);
     border-radius: 10px;
     padding: 15px;
 
@@ -143,8 +161,15 @@
     }
 
     .game-top {
+        height: 100%;
         display: flex;
         color: var(--clr-text);
+
+        h2 {
+            font-family: var(--font-heading);
+            color: var(--clr-accent);
+            text-align: center;
+        }
     }
 
     .game-hover {
