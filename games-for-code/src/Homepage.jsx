@@ -6,15 +6,15 @@ export default function Homepage() {
     const cardTitles = [
         {
             front: "Fun",
-            back: "explanation"
+            back: "Traditional browser‑style puzzles and games"
         },
         {
             front: "Easy",
-            back: "explanation"
+            back: "Simple, straightforward instructions"
         },
         {
             front: "Educational",
-            back: "explanation"
+            back: "Interactive learning that removes the textbook from the process"
         }
     ]
 
