@@ -3,8 +3,10 @@
     border-bottom: 1px solid var(--clr-accent);
     margin-bottom: 30px;
 
-    p {
+    h1 {
         color: var(--clr-text);
+        font-family: var(--font-heading);
+        font-size: 24px;
     }
 
     #main-nav {

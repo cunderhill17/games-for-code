@@ -1,0 +1,31 @@
+.not-found-con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    h2, h3 {
+        font-family: var(--font-heading);
+        color: var(--clr-text);
+    }
+
+    h2 {
+        font-size: 75px;
+    }
+
+    p {
+        color: var(--clr-text);
+    }
+
+    a {
+        background-color: var(--clr-accent);
+        color: var(--clr-surface);
+        padding: 10px 20px;
+        border-radius: 5px;
+
+        &:hover {
+            filter: brightness(1.3);
+        }
+    }
+}

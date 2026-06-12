@@ -53,7 +53,7 @@ function GameCard({item}) {
                     {/* <img src={item.image} alt={`${item.name} Game Image`} /> */}
                 </div>
                 <div className={cardStyles['game-hover']}>
-                    <img src="images/play-button.svg" alt="Play Button Icon" />
+                    <img src={item.available ? 'images/play-button.svg' : 'images/construction-icon.svg'} alt={item.available ? 'Play Button Icon' : 'Under Construction Icon'} />
                 </div>
             </NavLink> 
         </section>    

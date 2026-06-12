@@ -6,15 +6,15 @@ export default function Homepage() {
     const cardTitles = [
         {
             front: "Fun",
-            back: "explanation"
+            back: "Traditional browser‑style puzzles and games"
         },
         {
             front: "Easy",
-            back: "explanation"
+            back: "Simple, straightforward instructions"
         },
         {
             front: "Educational",
-            back: "explanation"
+            back: "Interactive learning that removes the textbook from the process"
         }
     ]
 
@@ -38,8 +38,8 @@ export default function Homepage() {
             </section>
 
             <section className='grid-con'>
-                <div id={styles['coming-soon']} className="col-span-full">
-                    <p>'Coming Soon'</p>
+                <div className={`col-span-full ${styles['coming-soon']}`}>
+                    <p>Coming Soon</p>
                 </div>
             </section>
 
