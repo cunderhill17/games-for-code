@@ -38,8 +38,8 @@ export default function Homepage() {
             </section>
 
             <section className='grid-con'>
-                <div id={styles['coming-soon']} className="col-span-full">
-                    <p>'Coming Soon'</p>
+                <div className={`col-span-full ${styles['coming-soon']}`}>
+                    <p>Coming Soon</p>
                 </div>
             </section>
 
