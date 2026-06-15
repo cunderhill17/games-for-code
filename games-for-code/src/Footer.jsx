@@ -2,10 +2,10 @@ import footerStyles from './styles/components/Footer.module.scss';
 
 export default function Footer() {
     return (
-        <footer id={footerStyles['footer']}>
+        <footer className={footerStyles['footer']}>
             <section className='grid-con'>
                 <p className='col-span-full'>
-                    &copy; 2026 Games for Code. Designed and developed by Paper Lantern Studio. All rights reserved.
+                    &copy; 2026 BlankSlate Games. Designed and developed by Paper Lantern Studio. All rights reserved.
                 </p>
             </section>
         </footer>

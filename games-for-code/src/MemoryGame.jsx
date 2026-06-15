@@ -19,6 +19,7 @@ export default function MemoryGame() {
     const [playerScore, setPlayerScore] = useState(0);
     const [openRulesModal, setOpenRulesModal] = useState(false);
     const [openWinModal, setOpenWinModal] = useState(false);
+    const [triggerShuffle, setTriggerShuffle] = useState(0);
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
@@ -65,19 +66,32 @@ export default function MemoryGame() {
         if (!rawData.length) return;
 
         const delayDebounceTimer = setTimeout(() => {
+            let shuffleDeck = [...rawData]; 
             let currentMatches = []
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    // Pick a random index from 0 to i
+                    const j = Math.floor(Math.random() * (i + 1));
+                    // Swap elements
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            shuffle(shuffleDeck[category.category].matches);
 
             if (width < 768) {
                 for(let i = 0; i < 6; i++) {
-                    currentMatches.push(rawData[category.category].matches[i]);
+                    currentMatches.push(shuffleDeck[category.category].matches[i]);
                 }
             } else if (width < 1200) {
                 for(let i = 0; i < 10; i++) {
-                    currentMatches.push(rawData[category.category].matches[i]);
+                    currentMatches.push(shuffleDeck[category.category].matches[i]);
                 }
             } else {
                 for(let i = 0; i < 12; i++) {
-                    currentMatches.push(rawData[category.category].matches[i]);
+                    currentMatches.push(shuffleDeck[category.category].matches[i]);
                 }
             }
 
@@ -87,7 +101,7 @@ export default function MemoryGame() {
 
         return () => clearTimeout(delayDebounceTimer);
 
-    }, [width, rawData, category]);
+    }, [width, rawData, category, triggerShuffle]);
 
     //Where the win conditions will go
     useEffect(() => {
@@ -199,6 +213,7 @@ export default function MemoryGame() {
         elapsedTime.current = null;
         setPlayerScore(0);
         setOpenWinModal(false);
+        setTriggerShuffle(prev => prev + 1);
     }
 
     function openRulesPopup() {
@@ -223,7 +238,7 @@ export default function MemoryGame() {
                 <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
                     <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
                     <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
-                        {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
+                        {allCategories.length > 0 ? allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>) : <option>Loading...</option>}    
                     </select>
                     <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
                     <button className={btnStyles['game-btn']} onClick={openRulesPopup}>Rules</button>
