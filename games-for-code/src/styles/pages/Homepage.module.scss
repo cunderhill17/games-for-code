@@ -83,20 +83,52 @@
 .coming-soon {
     background-color: var(--clr-surface);
     display: flex;
+    flex-direction: column;
+    gap: 25px;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    position: relative;
+    height: 500px;
+    padding: 25px;
 
-    p {
-        color: var(--clr-text);
+    .title {
+        background-color: var(--clr-accent);
+        padding: 25px;
+        width: 95%;
+        border-radius: 10px;
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 25px;
+            color: var(--clr-surface);
+            text-align: center;
+        }
     }
+
+    .desc {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        height: 300px;
+        width: 300px;
+        border: 1px solid var(--clr-text);
+        background-color: var(--clr-bg);
+        padding: 15px;
+        box-shadow: 3px 3px 3px rgba($color: #ffffff, $alpha: 0.5);
+
+        h3 {
+            font-family: var(--font-heading);
+            color: var(--clr-text);
+        }
+
+        p {
+            color: var(--clr-text);
+            text-align: center;
+        }
+    }    
 }
-
-
-
-
-
-
 
 
 
@@ -126,6 +158,30 @@
     .card-back p {
         font-size: 20px;
     }
+
+    .coming-soon {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0px;
+
+        .title {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 75px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 75px;
+
+            h2 {
+                font-size: 45px;
+                text-align: right;
+            }
+        }
+
+        .desc {
+            position: absolute;
+            left:  25px;
+            top: 100px;
+        }    
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -142,5 +198,17 @@
     .card {
         width: 225px;
         height: 225px;
+    }
+
+    .coming-soon {
+        .title {
+            h2 {
+                font-size: 55px;
+            }
+        }
+
+        .desc {
+            left:  100px;
+        }    
     }
 }

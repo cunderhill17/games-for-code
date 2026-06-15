@@ -39,7 +39,13 @@ export default function Homepage() {
 
             <section className='grid-con'>
                 <div className={`col-span-full ${styles['coming-soon']}`}>
-                    <p>Coming Soon</p>
+                    <div className={styles['title']}>
+                        <h2>Coming Soon</h2>
+                    </div>
+                    <div className={styles['desc']}>
+                        <h3>Logic Lines</h3>
+                        <p>A quiz‑powered twist on Tic Tac Toe where you claim spots on the grid by answering questions correctly.</p>
+                    </div>
                 </div>
             </section>
 
