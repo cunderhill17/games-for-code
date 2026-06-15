@@ -114,8 +114,9 @@
 //Player Win Popup 
 .win-popup {
     background-color: var(--clr-surface);
-    box-shadow: 3px 3px 3px rgba($color: var(--clr-surface), $alpha: 0.5);
+    box-shadow: 2px 2px 2px rgba($color: #ffffff, $alpha: 0.5);
     color: var(--clr-text);
+    border: 2px solid var(--clr-accent);
     border-radius: 15px;
     display: none;
     flex-direction: column;
