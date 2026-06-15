@@ -21,6 +21,16 @@
             li {
                 a {
                     color: var(--clr-text);
+
+                    &:hover {
+                        color: var(--clr-accent);
+                        border-top: 1px solid var(--clr-accent);
+                        padding-top: 3px;
+                    }
+
+                    &:focus {
+                        color: var(--clr-accent);
+                    }
                 }
             }
         }
