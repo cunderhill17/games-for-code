@@ -24,8 +24,11 @@
         padding: 10px 20px;
         border-radius: 5px;
 
-        &:hover {
-            filter: brightness(1.3);
+        &:hover, &:focus {
+            cursor: pointer;
+            background-color: var(--clr-surface);
+            color: var(--clr-accent);
+            border: 1px solid var(--clr-accent);
         }
     }
 }
