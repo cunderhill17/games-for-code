@@ -238,7 +238,7 @@ export default function MemoryGame() {
                 <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
                     <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
                     <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
-                        {allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>)}
+                        {allCategories.length > 0 ? allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>) : <option>Loading...</option>}    
                     </select>
                     <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
                     <button className={btnStyles['game-btn']} onClick={openRulesPopup}>Rules</button>
