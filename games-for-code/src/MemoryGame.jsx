@@ -23,6 +23,7 @@ export default function MemoryGame() {
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
+    const categoryRef = useRef(null);
 
     //Retrieves game information from JSON file
     useEffect(() => {
@@ -228,6 +229,36 @@ export default function MemoryGame() {
         setOpenWinModal(false);
     }
 
+    useEffect(() => {
+        function gameControls(e) {
+
+            switch(e.key) {
+                case "h":
+                    openRulesPopup();
+                    break;
+                case "r":
+                    resetGame();
+                    break;
+                case "c":
+                    if (!inProgress && allCategories.length > 0) {
+                        categoryRef.current.focus();
+                    }
+                    break;
+                case "s":
+                    if (!inProgress && filteredData.length > 0) {
+                        startGame();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        window.addEventListener("keydown", gameControls);
+        return () => window.removeEventListener("keydown", gameControls);
+    }, [filteredData, inProgress, allCategories]);
+
+
     return (
         <main>
             <div className="grid-con">
@@ -236,7 +267,14 @@ export default function MemoryGame() {
                 </section>
 
                 <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
-                    <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
+                    <select 
+                        className={btnStyles['game-btn']} 
+                        name="gameCategories" 
+                        id="gameCategories" 
+                        onChange={changeCategory} 
+                        disabled={inProgress}
+                        ref={categoryRef}
+                    >
                         {allCategories.length > 0 ? allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>) : <option>Loading...</option>}    
                     </select>
                     <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
