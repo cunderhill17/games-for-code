@@ -23,6 +23,7 @@ export default function MemoryGame() {
     
     const startTime = useRef(null);
     const elapsedTime = useRef(null);
+    const categoryRef = useRef(null);
 
     //Retrieves game information from JSON file
     useEffect(() => {
@@ -228,6 +229,36 @@ export default function MemoryGame() {
         setOpenWinModal(false);
     }
 
+    useEffect(() => {
+        function gameControls(e) {
+
+            switch(e.key) {
+                case "h":
+                    openRulesPopup();
+                    break;
+                case "r":
+                    resetGame();
+                    break;
+                case "c":
+                    if (!inProgress && allCategories.length > 0) {
+                        categoryRef.current.focus();
+                    }
+                    break;
+                case "s":
+                    if (!inProgress && filteredData.length > 0) {
+                        startGame();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        window.addEventListener("keydown", gameControls);
+        return () => window.removeEventListener("keydown", gameControls);
+    }, [filteredData, inProgress, allCategories]);
+
+
     return (
         <main>
             <div className="grid-con">
@@ -236,10 +267,17 @@ export default function MemoryGame() {
                 </section>
 
                 <div className={`col-span-full ${btnStyles['memoryBtnCon']}`}>
-                    <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
-                    <select className={btnStyles['game-btn']} name="gameCategories" id="gameCategories" onChange={changeCategory} disabled={inProgress}>
+                    <select 
+                        className={btnStyles['game-btn']} 
+                        name="gameCategories" 
+                        id="gameCategories" 
+                        onChange={changeCategory} 
+                        disabled={inProgress}
+                        ref={categoryRef}
+                    >
                         {allCategories.length > 0 ? allCategories.map((item, i) => <option key={i} value={item.category} >{item.name}</option>) : <option>Loading...</option>}    
                     </select>
+                    <button className={btnStyles['game-btn']} onClick={startGame} disabled={inProgress}>Start</button>
                     <button className={btnStyles['game-btn']} onClick={resetGame}>Restart</button>
                     <button className={btnStyles['game-btn']} onClick={openRulesPopup}>Rules</button>
                 </div>
@@ -256,6 +294,13 @@ export default function MemoryGame() {
                     <li>Bonus points are awarded for faster completion times and fewer wrong guesses</li>
                     <li>Use the category dropdown to switch topics</li>
                     <li>The number of starting cards adjusts based on your browser width to ensure accessibility across all devices</li>
+                </ol>
+                <h3>Keyboard Controls</h3>
+                <ol>
+                    <li>[h] -- open rules</li>
+                    <li>[s] -- start game</li>
+                    <li>[r] -- reset game</li>
+                    <li>[c] -- change category</li>
                 </ol>
                 <button className={btnStyles['close-popup']} onClick={closeRulesPopup}>Close Popup</button>
             </section>
@@ -284,6 +329,8 @@ function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
     const [cards, setCards] = useState([])
     const [flippedCards, setFlippedCards] = useState([]);
     const [lockBoard, setLockBoard] = useState(false);
+    const [focusedIndex, setFocusedIndex] = useState(0);
+    const [numCards, setNumCards] = useState(null);
 
     //Separates the card matches into individual cards and then shuffles them so array order is random
     useEffect(() => {
@@ -322,7 +369,7 @@ function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
         }
 
         shuffle(newCards);
-
+        Promise.resolve().then(() => setNumCards(newCards.length));
         Promise.resolve().then(() => setCards(newCards));
     }, [gameData]);
 
@@ -341,23 +388,33 @@ function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
                         : card
                 )
             );
-            // console.log('Cards Match');
 
             const newMatchedPair = gameData.findIndex(item => item.id === cardId);
             setMatchedPairs(prev => [...prev, gameData[newMatchedPair]])
         }
 
     }, [flippedCards, gameData, setMatchedPairs, setWrongGuesses])
-    
+
     return (
-        <div className={`col-span-full ${styles.cardContainer}`}>
-           {cards.map((item, i) => <Card key={i} 
-                item={item} category={category} 
-                setFlippedCards={setFlippedCards} 
-                flippedCards={flippedCards}
-                lockBoard={lockBoard}
-                setLockBoard={setLockBoard}
-            />)}
+        <div 
+            className={`col-span-full ${styles.cardContainer}`} 
+            tabIndex="0" 
+        >
+           {cards.map((item, i) => 
+                <Card 
+                    key={i}
+                    index={i}
+                    focusedIndex={focusedIndex}
+                    setFocusedIndex={setFocusedIndex} 
+                    item={item} 
+                    category={category} 
+                    setFlippedCards={setFlippedCards} 
+                    flippedCards={flippedCards}
+                    lockBoard={lockBoard}
+                    setLockBoard={setLockBoard}
+                    numCards={numCards}
+                />
+            )}
         </div>
     );
 
@@ -370,20 +427,27 @@ function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
 
 
 
-function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLockBoard}) {
+function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLockBoard, index, focusedIndex, setFocusedIndex, numCards}) {
     const [flipped, setFlipped] = useState(false);
+    const ref = useRef(null);
 
     useEffect(() => {
         if (flippedCards.length === 0) {
 
             const delayDebounceTimer = setTimeout(() => {                        
                 Promise.resolve().then(() => setFlipped(false));
-                Promise.resolve().then(() => setLockBoard(false))
+                Promise.resolve().then(() => setLockBoard(false));
             }, 1500);
 
             return () => clearTimeout(delayDebounceTimer);
         }
     }, [flippedCards, setLockBoard]);
+
+    useEffect(() => {
+        if (index === focusedIndex && ref.current) {
+            ref.current.focus();
+        }
+    }, [focusedIndex, index]);
 
     if (!category || !category.image) return null;
 
@@ -397,8 +461,32 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
         setFlippedCards(prev => [...prev, matchId]);
     }
 
+
+    function handleKeyDown(e) {
+        if (e.key === "ArrowRight") {
+            if (focusedIndex === numCards-1) {
+                setFocusedIndex(0);
+            } else {
+                setFocusedIndex(prev => prev + 1);
+            }
+        } else if (e.key === "ArrowLeft") {
+            if (focusedIndex === 0) {
+                setFocusedIndex(numCards -1);
+            } else {
+                setFocusedIndex(prev => prev - 1);
+            }   
+        }
+    }
+
     return (
-        <div className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`} onClick={cardFlipped} data-match-id={item.matchId}>
+        <button 
+            className={`${styles.memoryCard} ${flipped ? styles.flipped : ''}`}
+            ref={ref} 
+            onClick={cardFlipped} 
+            data-match-id={item.matchId} 
+            tabIndex={index === focusedIndex ? 0 : -1}
+            onKeyDown={handleKeyDown}
+        >
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
                     <img src={item.matched ? 'images/matched.jpg' : category.image } alt={`${category.name} card image`} />
@@ -407,6 +495,6 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
                     <p>{item.text}</p>
                 </div>
             </div>
-        </div>
+        </button>
     )
 }

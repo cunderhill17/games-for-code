@@ -1,5 +1,6 @@
 import styles from './styles/pages/Homepage.module.scss';
-import banner from './assets/banner.svg'
+import hero from './assets/banner.svg'
+import mobHero from './assets/mobile-banner.svg'
 
 export default function Homepage() {
 
@@ -24,7 +25,11 @@ export default function Homepage() {
 
             <section className="grid-con">
                 <div className={`col-span-full pos-relative ${styles['hero-con']}`}>
-                    <img src={banner} alt="Game Symbols and Icons"/>
+                    <picture>
+                        <source media="(max-width: 767px)" srcSet={mobHero} />
+                        <source media="(min-width: 768px)" srcSet={hero} />
+                        <img src={hero} alt="Game Symbols and Icons" />
+                    </picture>
                     <h2>Play Games. <br/> Learn Code.</h2>
                 </div>
             </section>
