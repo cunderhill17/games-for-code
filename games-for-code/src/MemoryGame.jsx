@@ -295,6 +295,13 @@ export default function MemoryGame() {
                     <li>Use the category dropdown to switch topics</li>
                     <li>The number of starting cards adjusts based on your browser width to ensure accessibility across all devices</li>
                 </ol>
+                <h3>Keyboard Controls</h3>
+                <ol>
+                    <li>[h] -- open rules</li>
+                    <li>[s] -- start game</li>
+                    <li>[r] -- reset game</li>
+                    <li>[c] -- change category</li>
+                </ol>
                 <button className={btnStyles['close-popup']} onClick={closeRulesPopup}>Close Popup</button>
             </section>
 
