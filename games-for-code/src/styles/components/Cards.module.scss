@@ -10,9 +10,15 @@
     width: 117px;
     height: 117px;
     margin: 2px;
+    background-color: transparent;
+    border: none;
 
     &:hover {
         cursor: pointer;
+    }
+
+    &:focus {
+        border: 1px solid var(--clr-text);
     }
 }
 
