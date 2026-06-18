@@ -15,7 +15,7 @@ export default function Games() {
             link: '#' 
         },
         {
-            name: "Syntax Saver",
+            name: "Dev Ladder",
             available: false,
             link: '#' 
         }
@@ -34,7 +34,6 @@ export default function Games() {
                     {gameInfo.map((item, i) => <GameCard key={i} item={item} />)}
                 </div>
             </section>
-
         </main>
     )
 }
