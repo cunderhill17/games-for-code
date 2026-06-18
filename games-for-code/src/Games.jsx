@@ -7,19 +7,16 @@ export default function Games() {
         {
             name: "Code Match",
             available: true,
-            image: 'images/code-match.jpg',
             link: '/memory'
         },
         {
             name: "Logic Lines",
             available: false,
-            image: 'images/code-match.jpg',
             link: '#' 
         },
         {
-            name: "Syntax Saver",
+            name: "Dev Ladder",
             available: false,
-            image: 'images/code-match.jpg',
             link: '#' 
         }
     ]
@@ -37,7 +34,6 @@ export default function Games() {
                     {gameInfo.map((item, i) => <GameCard key={i} item={item} />)}
                 </div>
             </section>
-
         </main>
     )
 }
@@ -50,7 +46,6 @@ function GameCard({item}) {
             <NavLink to={item.link}>
                 <div className={cardStyles['game-top']}>
                     <h2>{item.name}</h2>
-                    {/* <img src={item.image} alt={`${item.name} Game Image`} /> */}
                 </div>
                 <div className={cardStyles['game-hover']}>
                     <img src={item.available ? 'images/play-button.svg' : 'images/construction-icon.svg'} alt={item.available ? 'Play Button Icon' : 'Under Construction Icon'} />
