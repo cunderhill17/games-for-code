@@ -61,7 +61,7 @@ export default function Homepage() {
 
 function Cards({item}) {
     return (
-        <div className={styles['card']}>
+        <div className={styles['card']} tabIndex="0">
             <div className={styles["card-inner"]}>
                 <div className={styles["card-front"]}>
                     <p>{item.front}</p>
