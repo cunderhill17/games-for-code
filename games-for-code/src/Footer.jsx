@@ -5,7 +5,7 @@ export default function Footer() {
         <footer className={footerStyles['footer']}>
             <section className='grid-con'>
                 <p className='col-span-full'>
-                    &copy; 2026 BlankSlate Games. Designed and developed by Seven Paper Lanterns. All rights reserved.
+                    &copy; 2026 Neon Crates. Designed and developed by Seven Paper Lanterns. All rights reserved.
                 </p>
             </section>
         </footer>
