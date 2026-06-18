@@ -104,7 +104,7 @@ export default function MemoryGame() {
 
     }, [width, rawData, category, triggerShuffle]);
 
-    //Where the win conditions will go
+    //Win conditions for the game
     useEffect(() => {
         if(gameData.length === matchedPairs.length && gameData.length !== 0) {
             const winGameTimeout = setTimeout(() => {
@@ -189,8 +189,8 @@ export default function MemoryGame() {
     }, [matchedPairs, gameData, wrongGuesses]);
     
 
-    //Saves filtered data to game data so cards the player is using won't be changed by resizing the browser
-    //Also sets the game to being in progress
+    //Saves filtered data to gameData so that the cards the player is using won't be changed by resizing the browser
+    //Also sets the game to being in progress & starts the time for the game
     function startGame() {
         if(filteredData.length !== 0) {
             setGameData(filteredData);
@@ -229,6 +229,7 @@ export default function MemoryGame() {
         setOpenWinModal(false);
     }
 
+    //Keyboard Shortcuts
     useEffect(() => {
         function gameControls(e) {
 
@@ -373,6 +374,9 @@ function GameContainer({gameData, category, setMatchedPairs, setWrongGuesses}) {
         Promise.resolve().then(() => setCards(newCards));
     }, [gameData]);
 
+
+    //Logic for when two cards have been selected
+    //Determines if cards are matches, locks board so a third card can't be selected, adds correct matches to final matched pairs array
     useEffect(() => {
         if(flippedCards.length === 2) {
             flippedCards[0] === flippedCards[1] ? cardsMatch(flippedCards[0]) : setWrongGuesses(prev => prev + 1);
@@ -431,6 +435,7 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
     const [flipped, setFlipped] = useState(false);
     const ref = useRef(null);
 
+    //Unflips cards once they've been compared and unlocks the board so cards can be selected
     useEffect(() => {
         if (flippedCards.length === 0) {
 
@@ -443,6 +448,7 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
         }
     }, [flippedCards, setLockBoard]);
 
+    //Focuses on the current card the player has moved to using keyboard arrows
     useEffect(() => {
         if (index === focusedIndex && ref.current) {
             ref.current.focus();
@@ -451,6 +457,7 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
 
     if (!category || !category.image) return null;
 
+    //Sets the status of clicked cards to flipped if certain conditions are met
     function cardFlipped(event) {
         if (item.matched) return;
         if (flipped) return;
@@ -461,7 +468,7 @@ function Card({item, category, setFlippedCards, flippedCards, lockBoard, setLock
         setFlippedCards(prev => [...prev, matchId]);
     }
 
-
+    // Moves keyboard focus left or right through the cards, wrapping around at the ends.
     function handleKeyDown(e) {
         if (e.key === "ArrowRight") {
             if (focusedIndex === numCards-1) {
